@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block title %}Movie Recommendation System{% endblock %}
+
+{% block content %}
+<style>
+    .get_started{
+        position: relative;
+        display: block;
+        width: 100px;
+        height: 2.5rem;
+        background: hsl(0, 92%, 64%);
+        cursor: pointer;
+        margin-top: 20px;
+        margin-left: 47%;
+        color: #1f2029;
+      }
+      .tag{
+        background: hsl(0, 92%, 64%);
+        cursor: pointer;
+        margin-top: 30px;
+        margin-left: 47%;
+        color: #1f2029;
+        color:white;
+        text-decoration: none;
+        padding: 10px;
+        background: grey;
+       
+      }
+      .get_started:hover {
+        background: #1f2029;
+        color: hwb(0 31% 3%);
+        border: 1px solid hsl(0, 92%, 64%);
+      }
+</style>
+    <h1>Movie Recommendation System</h1>    
+    <div>
+        <a class="tag" href="{% url "login" %}">Get Started</a>
+    </div>
+{% endblock %}

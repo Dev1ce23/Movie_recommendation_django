@@ -1,0 +1,17 @@
+
+*{  
+    margin: 0;
+    padding: 0;
+    
+}
+body{
+    background: url("/static/images/background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+h1{
+    color: hsl(0, 92%, 64%);
+    margin-left: 35%;
+    margin-top: 20%;
+}

@@ -1,0 +1,94 @@
+{% extends 'home_base.html' %}
+{% load static %}
+{% block title %}Movie Recommendation System{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+{% endblock %}
+{% block content %}
+<style> 
+  .search-bar{
+      margin-top: 15%;
+      margin-left: 10%;
+  }
+  .logout{
+    width: 10%;
+    padding: 10px;
+    background: grey;
+    margin-left: 95%;
+    text-decoration: none;
+  }
+  .logout:hover {
+    background:  rgb(255, 0, 0);
+  }
+
+  @keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+   
+  .spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: #000;
+    animation: spinner .6s linear infinite;
+  }
+
+  .hidden {
+    display:none;
+  }
+
+  </style>
+<a  class="logout" link href="{% url 'logout' %}">Logout</a>
+<div class="search-bar">
+  <form class="example" action="{% url 'movie-search' %}" method="GET">
+  {% csrf_token %}
+  <input type="text" placeholder="Choose a Movie.." name="search">
+  <button id="search-movies"><i class="fa fa-search"></i></button>
+  <div class="spinner hidden"></div>
+  </form>
+
+  <div id="data"></div>
+</div>
+
+<script>
+
+  let searchBtn = document.getElementById('search-movies');
+  let spinner = document.querySelector('.spinner');
+
+  searchBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    searchBtn.classList.add('hidden');
+    spinner.classList.remove('hidden');
+
+    fetch("/movie-search?search=" + document.querySelector('input[name="search"]').value).then(function(response) {
+      return response.json();
+    }).then(function(data) {
+      searchBtn.classList.remove('hidden');
+      spinner.classList.add('hidden');
+
+      let dataDiv = document.getElementById('data');
+
+      dataDiv.innerHTML = "";
+      
+      
+      data["movies"].forEach(function(movie) {
+        let movieDiv = document.createElement('p');
+        movieDiv.innerText = movie;
+        dataDiv.appendChild(movieDiv);
+      });
+
+    });
+  })
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base2.html' %}
+{% load static %} 
+{% block csss_file %}
+    <link rel="stylesheet" href="{% static "authentication/style.css" %}"/>
+{% endblock %} 
+{% block title %}
+    Movie Recommendation System
+{% endblock %}
+{% block content %}
+<div class="container">
+    
+    <div class="above_button">
+        <div class="lab">
+            <h6 class="label"><span>Log In </span><span>Sign Up</span></h6>
+        </div>
+        <div class="button"> 
+            <input type="checkbox" id="btn-1" onclick="login()" {% if request.path == "/signup/" %}checked{% endif %}>
+            <label for="btn-1"></label>
+        </div>
+    </div>
+    <div class="box">
+        <div class="theform {% if request.path == "/signup/" %}trans{% endif %}">
+
+            <div class="login">
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %} 
+                    <h4 class="form_head">Log In</h4>
+                    <i class="fa-regular fa-user"></i>
+                    <input type="text" placeholder="Username" class="field" name="username">
+                    <i class="fa-solid fa-lock "></i>
+                    <input type="password" placeholder="Password" class="field" name="password">
+
+                    {% if error %}
+                    <p>{{error}}</p>
+                    
+                    {% endif %}
+
+                    <input type="submit" value="Log In" id="submit" name="submit"><br>
+
+                </form>
+            </div>
+            <div class="register">
+                <form action="{% url 'signup' %}" method="post">
+                    {% csrf_token %}
+                    <h4 class="form_head2">Sign Up</h4>
+                    <i class="fa-regular fa-user" id="login_username"></i>
+                    <input type="text" placeholder="Full Name" class="field" name="username" >
+                    <i class="fa-solid fa-at fa-lg" id="icon2"></i>
+                    <input type="email" placeholder="Email" class="field" name="email" >
+                    <i class="fa-solid fa-lock fa-lg" id="icon3"></i>
+                    <input type="password" placeholder="Password" class="field" name="password1">
+                    <i class="fa-solid fa-lock fa-lg" id="icon4"></i>
+                    <input type="password" placeholder="Confrim Password" class="field" name="password2">
+
+                    {% if form.errors %}
+                    {% for field in form %}
+
+                        {% for error in field.errors %}
+                                {{field.label}}: {{ error|escape }}
+                        {% endfor %}
+
+                        {% endfor %}
+                    {% endif %}
+
+                    <input type="submit" value="Sign Up" id="submit"><br>
+            </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+ function login(){       
+    document.getElementsByClassName("theform")[0].classList.toggle('trans');
+ }
+</script>
+{% endblock %}
