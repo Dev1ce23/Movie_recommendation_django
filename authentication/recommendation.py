@@ -7,7 +7,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-
 def recommendations(title):
 
     dataset_path="authentication/IMDB-Movie-Data.csv"
@@ -16,7 +15,6 @@ def recommendations(title):
     finaldata=data[["Title","Plot"]]
     finaldata=finaldata.set_index('Title')
 
-    finaldata["Plot"][0]
 
     nltk.download('punkt')
     nltk.download('averaged_perceptron_tagger')
