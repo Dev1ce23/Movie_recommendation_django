@@ -1,17 +1,26 @@
 import pandas as pd
-import numpy as np
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer 
 from sklearn.metrics.pairwise import cosine_similarity
-
+from .models import Movie
 
 def recommendations(title):
+    
 
-    dataset_path="authentication/IMDB-Movie-Data.csv"
-    data=pd.read_csv(dataset_path)
+    # db_Title = Movie.objects.all()
+    # data = list(db_Title.values("Title"))
+    # print(data)
+    # Title = []
+    # for i in data:
+    #     Title.append(i["Title"])
+    # print(len(Title))
 
+    movies = dict(Movie.objects.values_list("Title","Plot"))
+    x= list(movies.keys())
+    y= list(movies.values())
+    data = pd.DataFrame({'Title': x, 'Plot': y})
     finaldata=data[["Title","Plot"]]
     finaldata=finaldata.set_index('Title')
 

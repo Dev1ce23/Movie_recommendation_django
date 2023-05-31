@@ -8,6 +8,7 @@ class Movie(models.Model):
     Actor=models.CharField(max_length=100)
     Year= models.IntegerField()
     Rating=models.IntegerField()
-     
+    class Meta:
+          app_label="authentication"
     def __str__(self):
-            return self.Title  
+            return f"{self.Title} - {self.Plot} - {self.Genre} - {self.Director} - {self.Rating} - {self.Year}" 
