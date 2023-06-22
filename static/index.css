@@ -12,6 +12,6 @@ body{
 }
 h1{
     color: hsl(0, 92%, 64%);
-    margin-left: 35%;
+    text-align: center;
     margin-top: 20%;
 }

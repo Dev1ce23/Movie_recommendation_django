@@ -4,37 +4,27 @@
 
 {% block content %}
 <style>
-    .get_started{
-        position: relative;
-        display: block;
-        width: 100px;
-        height: 2.5rem;
-        background: hsl(0, 92%, 64%);
-        cursor: pointer;
-        margin-top: 20px;
-        margin-left: 47%;
-        color: #1f2029;
-      }
-      .tag{
-        background: hsl(0, 92%, 64%);
-        cursor: pointer;
-        margin-top: 30px;
-        margin-left: 47%;
-        color: #1f2029;
-        color:white;
-        text-decoration: none;
-        padding: 10px;
-        background: grey;
-       
-      }
-      .get_started:hover {
-        background: #1f2029;
-        color: hwb(0 31% 3%);
-        border: 1px solid hsl(0, 92%, 64%);
-      }
+  .tag{
+    text-decoration: none;
+   background: hsl(0, 92%, 64%);
+   border: none;
+   color: #1f2029;
+   font-weight: 700;
+   letter-spacing: 0.5px;
+   cursor: pointer;
+   margin-top: 30px;
+   margin-left: 45%;
+   padding: 10px;
+  
+ } 
+ .tag:hover {
+   background: #1f2029;
+   color: hwb(0 31% 3%);
+   border: 1px solid hsl(0, 92%, 64%);
+ }
 </style>
     <h1>Movie Recommendation System</h1>    
-    <div>
-        <a class="tag" href="{% url "login" %}">Get Started</a>
-    </div>
+    <br>
+    <a class="tag" href="{% url "login" %}">Get Started</a>
+    
 {% endblock %}
