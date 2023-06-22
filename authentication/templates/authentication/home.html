@@ -56,39 +56,57 @@
   <div class="spinner hidden"></div>
   </form>
 
-  <div id="data"></div>
+  <div class="row">
+  </div>
 </div>
-
 <script>
-
+  let searchForm = document.querySelector('.example');
   let searchBtn = document.getElementById('search-movies');
   let spinner = document.querySelector('.spinner');
+  let dataDiv = document.getElementByClassName('row')[0];
 
-  searchBtn.addEventListener('click', function(e) {
+  searchForm.addEventListener('submit', function(e) {
     e.preventDefault();
     searchBtn.classList.add('hidden');
     spinner.classList.remove('hidden');
 
-    fetch("/movie-search?search=" + document.querySelector('input[name="search"]').value).then(function(response) {
-      return response.json();
-    }).then(function(data) {
-      searchBtn.classList.remove('hidden');
-      spinner.classList.add('hidden');
+    fetch("/movie-search/?search=" + encodeURIComponent(document.querySelector('input[name="search"]').value))
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error('Network response was not OK');
+        }
+        return response.json();
+      })
+      .then(function(data) {
+        searchBtn.classList.remove('hidden');
+        spinner.classList.add('hidden');
 
-      let dataDiv = document.getElementById('data');
+        dataDiv.innerHTML = "";
 
-      dataDiv.innerHTML = "";
-      
-      
-      data["movies"].forEach(function(movie) {
-        let movieDiv = document.createElement('p');
-        movieDiv.innerText = movie;
-        dataDiv.appendChild(movieDiv);
+        if (Array.isArray(data.data)) {
+          data.data.forEach(function(movie) {
+            let colDiv = document.createElement('div'); 
+            colDiv.classList.add('col-sm-6');
+            
+            colDiv.innerText = movie.Title;
+            dataDiv.appendChild(colDiv);
+          });
+        } else {
+          let errorDiv = document.createElement('p');
+          errorDiv.innerText = 'No movies found';
+          dataDiv.appendChild(errorDiv);
+        }
+      })
+      .catch(function(error) {
+        searchBtn.classList.remove('hidden');
+        spinner.classList.add('hidden');
+
+        let errorDiv = document.createElement('p');
+        errorDiv.innerText = 'An error occurred. Please try again later.';
+        dataDiv.appendChild(errorDiv);
+        console.error(error);
       });
-
-    });
-  })
-
-
+  });
 </script>
+
 {% endblock %}

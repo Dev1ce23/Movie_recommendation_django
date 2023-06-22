@@ -5,18 +5,12 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer 
 from sklearn.metrics.pairwise import cosine_similarity
 from .models import Movie
+from django.core.serializers import serialize
+from django.http import JsonResponse
+import json
 
 def recommendations(title):
     
-
-    # db_Title = Movie.objects.all()
-    # data = list(db_Title.values("Title"))
-    # print(data)
-    # Title = []
-    # for i in data:
-    #     Title.append(i["Title"])
-    # print(len(Title))
-
     movies = dict(Movie.objects.values_list("Title","Plot"))
     x= list(movies.keys())
     y= list(movies.values())
@@ -84,3 +78,8 @@ def recommendations(title):
         recommended_movies.append(list(finaldata.index)[i])
     return recommended_movies
 
+
+def movie_details(title):
+    movie_list = recommendations(title)
+    movies = list(Movie.objects.filter(Title__in=movie_list).values())
+    return {"data": movies}

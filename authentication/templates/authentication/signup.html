@@ -30,21 +30,24 @@
                     <i class="fa-solid fa-lock "></i>
                     <input type="password" placeholder="Password" class="field" name="password">
 
+                    
+
+                    <input type="submit" value="Log In" id="submit" name="submit"><br>
+                    <div style="color:hsl(0, 92%, 64%); text-align:center;">
                     {% if error %}
                     <p>{{error}}</p>
                     
                     {% endif %}
-
-                    <input type="submit" value="Log In" id="submit" name="submit"><br>
-
+                    </div>
                 </form>
             </div>
+            
             <div class="register">
                 <form action="{% url 'signup' %}" method="post">
                     {% csrf_token %}
                     <h4 class="form_head2">Sign Up</h4>
                     <i class="fa-regular fa-user" id="login_username"></i>
-                    <input type="text" placeholder="Full Name" class="field" name="username" >
+                    <input type="text" placeholder="Username" class="field" name="username" >
                     <i class="fa-solid fa-at fa-lg" id="icon2"></i>
                     <input type="email" placeholder="Email" class="field" name="email" >
                     <i class="fa-solid fa-lock fa-lg" id="icon3"></i>
@@ -52,22 +55,23 @@
                     <i class="fa-solid fa-lock fa-lg" id="icon4"></i>
                     <input type="password" placeholder="Confrim Password" class="field" name="password2">
 
-                    {% if form.errors %}
-                    {% for field in form %}
-
-                        {% for error in field.errors %}
-                                {{field.label}}: {{ error|escape }}
-                        {% endfor %}
-
-                        {% endfor %}
-                    {% endif %}
-
                     <input type="submit" value="Sign Up" id="submit"><br>
             </form>
             </div>
-
         </div>
     </div>
+</div>
+<div style="text-align:center;">
+    {% if form.errors %}
+    {% for field in form %}
+
+    {% for error in field.errors %}
+            {{field.label}}: {{ error|escape }}
+            <br>
+    {% endfor %}
+
+    {% endfor %}
+{% endif %}
 </div>
 <script type="text/javascript">
  function login(){       

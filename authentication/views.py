@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .recommendation import recommendations
+from .recommendation import movie_details
 
 import json
 
@@ -43,7 +43,7 @@ def loginView(request):
             login(request, user)
             return redirect('home')
 
-        return render(request, 'authentication/signup.html', {'error': "invalid username/password"})
+        return render(request, 'authentication/signup.html', {'error': "Invalid username/password"})
 
         
     return render(request,'authentication/signup.html')
@@ -54,18 +54,13 @@ def home(request):
      return render(request,'authentication/home.html')
 
 def movieSearch(request):
-    if request.method =='GET':
-        movie_search = request.GET['search']
-
-    
-        movies = recommendations(movie_search)
-
-        movies = {
-            'movies': movies
-        }
+    if request.method == 'GET':
+        movie_search = request.GET.get('search')
+        json_data = movie_details(movie_search)
+        print(json_data)
+        return JsonResponse(json_data)
 
         
-        return JsonResponse(movies)
 
 def logoutPage(request):
     logout(request)
