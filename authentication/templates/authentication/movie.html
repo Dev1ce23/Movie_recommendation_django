@@ -1,0 +1,57 @@
+{% extends 'home_base.html' %}
+{% load static %}
+{% block title %}Movie Recommendation System{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<style>
+  h1{
+       text-align: center;
+      color: hsl(0, 92%, 64%);
+    }
+    body{
+      background-color:#1f2029;
+    }
+    .logout{
+      width: 10%;
+      padding: 10px;
+      margin-left: 95%;
+      text-decoration: none;
+      background: hsl(0, 92%, 64%);
+      border: none;
+      color: #1f2029;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+    .logout:hover {
+      background: #1f2029;
+      color: hwb(0 31% 3%);
+      border: 1px solid hsl(0, 92%, 64%);
+    }
+    a{
+      color: hsl(0, 92%, 64%);
+      text-decoration: none;
+    }
+
+  </style>
+<a class="logout" href="{% url 'logout' %}">Logout</a>
+  <h1><a href="{% url 'home' %}">Movie Recommendation System</a></h1>
+  <br>
+  {% for val in data %} 
+  <div class="card w-75 mx-auto">
+    <h5 class="card-header">{{val.Title}}</h5>
+    <div class="card-body">
+      <h5 class="card-title">Title: {{val.Title}}</h5>
+      <p class="card-text">Plot: {{val.Plot}}</p>
+    </div>
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item">Director: {{val.Director}}</li>
+        <li class="list-group-item">Genre: {{val.Genre}}</li>
+        <li class="list-group-item">Release Date: {{val.Year}}</li>
+        <li class="list-group-item">Rating: {{val.Rating}}</li>
+      </ul>
+  </div>
+  {% endfor %}
+{% endblock %}

@@ -5,9 +5,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .recommendation import movie_details
+from .recommendation import movie_details, single_movie
 
-import json
 
 
 from .forms import ReviewForm
@@ -59,8 +58,12 @@ def movieSearch(request):
         json_data = movie_details(movie_search)
         print(json_data)
         return JsonResponse(json_data)
-
-        
+    
+def movie(request,slug):
+    if request.method == 'GET':
+        json_data = single_movie(slug)
+        print(json_data)
+        return render(request,'authentication/movie.html',{'data':json_data})       
 
 def logoutPage(request):
     logout(request)
