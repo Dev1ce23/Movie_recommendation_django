@@ -39,19 +39,18 @@
 <a class="logout" href="{% url 'logout' %}">Logout</a>
   <h1><a href="{% url 'home' %}">Movie Recommendation System</a></h1>
   <br>
-  {% for val in data %} 
-  <div class="card w-75 mx-auto">
-    <h5 class="card-header">{{val.Title}}</h5>
+   
+  <div class="card w-25 h-50 mx-auto">
+    <img src="{{data.Poster}}" class="card-img-top" alt="data.Title">
     <div class="card-body">
-      <h5 class="card-title">Title: {{val.Title}}</h5>
-      <p class="card-text">Plot: {{val.Plot}}</p>
+      <h5 class="card-title">Title: {{data.Title}}</h5>
+      <p class="card-text">Plot: {{data.Plot}}</p>
     </div>
         <ul class="list-group list-group-flush">
-        <li class="list-group-item">Director: {{val.Director}}</li>
-        <li class="list-group-item">Genre: {{val.Genre}}</li>
-        <li class="list-group-item">Release Date: {{val.Year}}</li>
-        <li class="list-group-item">Rating: {{val.Rating}}</li>
+        <li class="list-group-item">Director: {{data.Director}}</li>
+        <li class="list-group-item">Genre: {{data.Genre}}</li>
+        <li class="list-group-item">Actor: {{data.Actors}}</li>
+        <li class="list-group-item">Release Date: {{data.Released}}</li>
       </ul>
   </div>
-  {% endfor %}
 {% endblock %}

@@ -77,12 +77,3 @@ def recommendations(title):
         recommended_movies.append(list(finaldata.index)[i])
     return recommended_movies
 
-
-def movie_details(title):
-    movie_list = recommendations(title)
-    movies = list(Movie.objects.filter(Title__in=movie_list).values())
-    return {"data": movies}
-
-def single_movie(title):
-    movie = list(Movie.objects.filter(Title=title).values())
-    return movie

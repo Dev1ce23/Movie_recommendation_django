@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
+import requests
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .recommendation import movie_details, single_movie
+from .recommendation import recommendations
 
 
 
@@ -55,14 +56,35 @@ def home(request):
 def movieSearch(request):
     if request.method == 'GET':
         movie_search = request.GET.get('search')
-        json_data = movie_details(movie_search)
-        print(json_data)
-        return JsonResponse(json_data)
+        recommended_movies=recommendations(movie_search)
+        api_key = 'c21718c5'  # Replace with your actual API key
+        movie_data_dict = {}
+    # Make a GET request to the OMDB API
+        for movie_title in recommended_movies:
+            url = f'http://www.omdbapi.com/?apikey={api_key}&t={movie_title}'
+            response = requests.get(url)
+            
+            if response.status_code == 200:
+                movie_data = response.json()
+                movie_data_dict[movie_title] = movie_data
+            else:
+                return JsonResponse({'error': 'Failed to fetch movie data.'}, status=500)
+            
+        Json_response={
+            'data':movie_data_dict
+        }   
+        return JsonResponse(Json_response)
+    
+    
     
 def movie(request,slug):
     if request.method == 'GET':
-        json_data = single_movie(slug)
-        print(json_data)
+        api_key = 'c21718c5'
+        print(slug)
+        url = f'http://www.omdbapi.com/?apikey={api_key}&t={slug}'
+        response = requests.get(url)
+        if response.status_code == 200:
+            json_data = response.json()
         return render(request,'authentication/movie.html',{'data':json_data})       
 
 def logoutPage(request):

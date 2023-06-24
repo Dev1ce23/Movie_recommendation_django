@@ -96,21 +96,23 @@
         spinner.classList.add('hidden');
   
         dataDiv.innerHTML = "";
-
-        if (Array.isArray(data.data)) {
-          data.data.forEach(function(movie) {
-           dataDiv.innerHTML+=`
-           <div class="col-sm-6 mb-3 mb-sm-0" style="padding-bottom: 12px;
-           padding-top: 12px;">
-            <div class="card w-50">
+        console.log(data);
+        if (data.hasOwnProperty('data')) {
+          let movieData = data.data;
+          for (const movieTitle in movieData) {
+            let movie = movieData[movieTitle];
+            dataDiv.innerHTML += `
+            <div class="col-sm-6">
+            <div class="card" style="width: 18rem;">
+              <img src="${movie.Poster}" class="card-img-top" alt="${movie.Title}">
               <div class="card-body">
                 <h5 class="card-title">${movie.Title}</h5>
                 <p class="card-text">${movie.Plot}</p>
                 <a href="/movie/${movie.Title}" class="btn btn-primary">View Details</a>
               </div>
             </div>
-          </div>` 
-          });
+            </div>`;
+          }
         } else {
           let errorDiv = document.createElement('p');
           errorDiv.innerText = 'No movies found';
@@ -128,4 +130,5 @@
       });
   });
 </script>
+
 {% endblock %}
